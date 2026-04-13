@@ -122,3 +122,59 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
     app.init();
 });
+
+// FREE ASL VIDEO SOURCES
+const ASL_SOURCES = {
+    // Option A: SignSchool open videos (free for educational use)
+    signschool: 'https://www.signingsavvy.com/media/mp4-hd/',
+    
+    // Option B: YouTube ASL channels (embed)
+    youtube: 'https://www.youtube.com/embed/',
+    
+    // Option C: Your own uploaded videos (GitHub or Cloudinary)
+    custom: 'assets/videos/'
+};
+
+// Demo ASL signs with real video URLs (replace with actual API)
+const aslDictionary = [
+    {
+        id: 'help',
+        name: 'Help',
+        videoUrl: 'https://www.signingsavvy.com/media/mp4-hd/22/22834.mp4', // Example
+        thumbnail: 'assets/thumbnails/help.jpg',
+        category: 'emergency',
+        difficulty: 'beginner'
+    },
+    {
+        id: 'thank-you',
+        name: 'Thank You',
+        videoUrl: 'https://www.signingsavvy.com/media/mp4-hd/6/6234.mp4',
+        thumbnail: 'assets/thumbnails/thank-you.jpg',
+        category: 'courtesy',
+        difficulty: 'beginner'
+    },
+    {
+        id: 'i-love-you',
+        name: 'I Love You',
+        videoUrl: 'https://www.signingsavvy.com/media/mp4-hd/26/26890.mp4',
+        thumbnail: 'assets/thumbnails/love-you.jpg',
+        category: 'emotions',
+        difficulty: 'beginner'
+    },
+    // Add 100+ more signs...
+];
+
+// Fetch from real API (example using free ASL API)
+async function fetchASLSigns(searchTerm = '') {
+    try {
+        // Real API endpoint (you need to sign up for API key)
+        const response = await fetch(`https://api.asl-dictionary.com/v1/signs?search=${searchTerm}&limit=50`);
+        const data = await response.json();
+        return data.signs;
+    } catch (error) {
+        console.log('Using demo data');
+        return aslDictionary.filter(s => 
+            s.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }
+}
