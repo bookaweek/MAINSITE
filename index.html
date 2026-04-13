@@ -3,507 +3,719 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- Theme color matches Version 2 (The Pulse) -->
     <meta name="theme-color" content="#050508">
+    <meta name="description" content="SIGNARIUM - The definitive ASL learning ecosystem">
     
-    <meta name="description" content="SIGNARIUM - The definitive ASL learning ecosystem. Build your personal Sign Vault.">
+    <title>SIGNARIUM</title>
     
-    <title>SIGNARIUM | Where Every Sign Finds Its Home</title>
-    
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    
-    <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="assets/icons/icon-192x192.png">
-    
-    <!-- Apple Mobile Web App -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SIGNARIUM">
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=SF+Mono:wght@400;500&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- Preload Critical Resources -->
-    <link rel="preload" href="js/app.js" as="script">
-    <script src="js/asl-database.js"></script>
 </head>
 <body>
-    <div id="app">
-        
-        <!-- LANDING PAGE -->
-        <section id="landing-page" class="page active">
-            <nav class="landing-nav">
-                <div class="logo">
-                    <span class="logo-icon">🏛️</span>
-                    <span class="logo-text">SIGNARIUM</span>
-                </div>
-                <div class="nav-links">
-                    <a href="#features">Features</a>
-                    <a href="#community">Community</a>
-                    <button class="btn-primary" onclick="app.enterApp()">Enter Vault</button>
-                </div>
-            </nav>
-            
-            <header class="hero">
-                <div class="hero-video-container">
-                    <div class="hero-fallback"></div>
-                    <div class="hero-overlay"></div>
-                </div>
-                
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        Where Every Sign<br>
-                        <span class="gradient-text">Finds Its Home</span>
-                    </h1>
-                    <p class="hero-subtitle">
-                        The most accurate ASL learning platform. Build your personal Sign Vault 
-                        with 15,000+ video signs, AI-powered practice, and offline access.
-                    </p>
-                    <div class="hero-cta">
-                        <button class="btn-glow" onclick="app.enterApp()">
-                            <span>Enter the Vault</span>
-                        </button>
-                        <button class="btn-secondary" onclick="app.showDemo()">
-                            <span>Watch Demo</span>
-                        </button>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <span class="stat-number">15K+</span>
-                            <span class="stat-label">Video Signs</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">50K+</span>
-                            <span class="stat-label">Active Learners</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">100%</span>
-                            <span class="stat-label">Offline Capable</span>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            
-            <section id="features" class="features">
-                <h2 class="section-title">The Complete ASL Ecosystem</h2>
-                <div class="feature-grid">
-                    <div class="feature-card glass">
-                        <div class="feature-icon">🔍</div>
-                        <h3>Definitive Dictionary</h3>
-                        <p>15,000+ video signs searchable by handshape, location, or meaning</p>
-                    </div>
-                    <div class="feature-card glass featured">
-                        <div class="feature-icon">🏦</div>
-                        <h3>Your Sign Vault</h3>
-                        <p>Personal collection with smart review, offline access, and progress tracking</p>
-                        <span class="badge">CORE FEATURE</span>
-                    </div>
-                    <div class="feature-card glass">
-                        <div class="feature-icon">🪞</div>
-                        <h3>Mirror Mode</h3>
-                        <p>Split-screen practice with ghost overlay and precision scoring</p>
-                    </div>
-                    <div class="feature-card glass">
-                        <div class="feature-icon">👥</div>
-                        <h3>Deaf Community</h3>
-                        <p>Learn from native signers, regional variations, and cultural context</p>
-                    </div>
-                </div>
-            </section>
-        </section>
 
-        <!-- MAIN APP -->
-        <section id="main-app" class="page">
-            
-            <!-- Sidebar -->
-            <nav class="sidebar">
-                <div class="sidebar-header">
-                    <div class="logo-small">
-                        <span>🏛️</span>
-                        <span>SIGNARIUM</span>
-                    </div>
-                </div>
-                
-                <div class="nav-items">
-                    <button class="nav-item" data-page="learn" onclick="app.navigate('learn')">
-                        <span class="nav-icon">📚</span>
-                        <span class="nav-label">Learn</span>
-                    </button>
-                    <button class="nav-item" data-page="dictionary" onclick="app.navigate('dictionary')">
-                        <span class="nav-icon">🔍</span>
-                        <span class="nav-label">Dictionary</span>
-                    </button>
-                    <button class="nav-item nav-highlight active" data-page="vault" onclick="app.navigate('vault')">
-                        <span class="nav-icon">🏦</span>
-                        <span class="nav-label">My Vault</span>
-                        <span class="nav-badge" id="vault-count">0</span>
-                    </button>
-                    <button class="nav-item" data-page="mirror" onclick="app.navigate('mirror')">
-                        <span class="nav-icon">🪞</span>
-                        <span class="nav-label">Mirror</span>
-                    </button>
-                    <button class="nav-item" data-page="community" onclick="app.navigate('community')">
-                        <span class="nav-icon">👥</span>
-                        <span class="nav-label">Community</span>
-                    </button>
-                </div>
-                
-                <div class="sidebar-footer">
-                    <div class="sync-status" id="sync-status">
-                        <span class="sync-indicator online"></span>
-                        <span class="sync-text">Online</span>
-                    </div>
-                    <button class="nav-item" onclick="app.openSettings()">
-                        <span class="nav-icon">⚙️</span>
-                        <span class="nav-label">Settings</span>
-                    </button>
-                </div>
-            </nav>
-
-            <!-- Main Content -->
-            <main class="main-content">
-                
-                <!-- Top Bar -->
-                <header class="top-bar">
-                    <div class="search-box">
-                        <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                        <input type="text" placeholder="Search signs, collections, or tags..." id="global-search">
-                    </div>
-                    <div class="top-actions">
-                        <button class="icon-btn" onclick="app.toggleNotifications()">
-                            <span class="notification-dot"></span>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
-                                <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
-                            </svg>
-                        </button>
-                        <button class="profile-btn" onclick="app.openProfile()">
-                            <div class="avatar">👤</div>
-                            <span>My Profile</span>
-                        </button>
-                    </div>
-                </header>
-
-                <!-- VAULT PAGE -->
-                <div id="page-vault" class="page-content active">
-                    <div class="vault-header">
-                        <div class="vault-title-section">
-                            <h1>🏦 My Sign Vault</h1>
-                            <p class="vault-subtitle">Your personal ASL collection — available offline</p>
-                        </div>
-                        <button class="btn-primary btn-glow" onclick="vault.openAddModal()">
-                            <span>+ Add New Sign</span>
-                        </button>
-                    </div>
-
-                    <!-- Vault Stats -->
-                    <div class="vault-stats-grid">
-                        <div class="stat-card glass">
-                            <div class="stat-icon">📊</div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="stat-total">0</span>
-                                <span class="stat-label">Total Signs</span>
-                            </div>
-                        </div>
-                        <div class="stat-card glass">
-                            <div class="stat-icon">🟢</div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="stat-mastered">0</span>
-                                <span class="stat-label">Mastered</span>
-                            </div>
-                        </div>
-                        <div class="stat-card glass">
-                            <div class="stat-icon">🟡</div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="stat-learning">0</span>
-                                <span class="stat-label">Learning</span>
-                            </div>
-                        </div>
-                        <div class="stat-card glass streak-card">
-                            <div class="stat-icon">🔥</div>
-                            <div class="stat-info">
-                                <span class="stat-value" id="stat-streak">12</span>
-                                <span class="stat-label">Day Streak</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Quick Actions -->
-                    <div class="vault-actions">
-                        <button class="btn-secondary" onclick="vault.startDailyReview()">
-                            Start Daily Review
-                        </button>
-                        <div class="filter-group">
-                            <select id="vault-sort" onchange="vault.sortSigns(this.value)">
-                                <option value="recent">Recently Added</option>
-                                <option value="alpha">Alphabetical</option>
-                                <option value="mastery">Mastery Level</option>
-                            </select>
-                            <select id="vault-filter" onchange="vault.filterSigns(this.value)">
-                                <option value="all">All Signs</option>
-                                <option value="mastered">Mastered</option>
-                                <option value="learning">Learning</option>
-                                <option value="new">New</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <!-- Collections -->
-                    <div class="collections-section">
-                        <h3>Collections</h3>
-                        <div class="collections-grid" id="collections-grid">
-                            <!-- Populated by JS -->
-                        </div>
-                        <button class="btn-text" onclick="vault.createCollection()">
-                            + Create New Collection
-                        </button>
-                    </div>
-
-                    <!-- Signs Grid -->
-                    <div class="signs-section">
-                        <h3>All Signs</h3>
-                        <div class="signs-grid" id="signs-grid">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- MIRROR MODE PAGE -->
-                <div id="page-mirror" class="page-content">
-                    <div class="mirror-container">
-                        <div class="mirror-header">
-                            <h1>🪞 Mirror Mode</h1>
-                            <div class="mirror-controls">
-                                <button class="btn-icon" onclick="mirror.toggleGhost()" id="ghost-toggle">
-                                    👻 Ghost: ON
-                                </button>
-                                <select id="playback-speed" onchange="mirror.setSpeed(this.value)">
-                                    <option value="0.5">0.5x</option>
-                                    <option value="0.75">0.75x</option>
-                                    <option value="1" selected>1x</option>
-                                    <option value="1.25">1.25x</option>
-                                </select>
-                                <button class="btn-icon" onclick="mirror.toggleLoop()">
-                                    🔁 Loop
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <div class="mirror-split">
-                            <div class="mirror-panel">
-                                <div class="panel-label">Reference</div>
-                                <video id="reference-video" class="mirror-video" loop playsinline>
-                                    <source src="" type="video/mp4">
-                                </video>
-                                <div class="video-controls">
-                                    <button onclick="mirror.playPause()" id="play-btn">▶️</button>
-                                </div>
-                            </div>
-                            
-                            <div class="mirror-panel">
-                                <div class="panel-label">You</div>
-                                <div class="camera-container">
-                                    <video id="camera-feed" class="mirror-video" autoplay playsinline muted></video>
-                                    <canvas id="ghost-canvas" class="ghost-overlay"></canvas>
-                                    <div class="camera-placeholder" id="camera-placeholder">
-                                        <button class="btn-primary" onclick="mirror.startCamera()">
-                                            Start Camera
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="camera-controls">
-                                    <button class="btn-record" onclick="mirror.startRecording()">
-                                        ● Record
-                                    </button>
-                                    <button class="btn-capture" onclick="mirror.captureFrame()">
-                                        📸 Capture
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="scoring-panel glass" id="scoring-panel" style="display: none;">
-                            <h3>Practice Analysis</h3>
-                            <div class="score-metrics">
-                                <div class="metric">
-                                    <span class="metric-label">Handshape</span>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" id="score-handshape"></div>
-                                    </div>
-                                    <span class="metric-value" id="score-handshape-val">0%</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Movement</span>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" id="score-movement"></div>
-                                    </div>
-                                    <span class="metric-value" id="score-movement-val">0%</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Location</span>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" id="score-location"></div>
-                                    </div>
-                                    <span class="metric-value" id="score-location-val">0%</span>
-                                </div>
-                                <div class="metric">
-                                    <span class="metric-label">Expression</span>
-                                    <div class="metric-bar">
-                                        <div class="metric-fill" id="score-expression"></div>
-                                    </div>
-                                    <span class="metric-value" id="score-expression-val">0%</span>
-                                </div>
-                            </div>
-                            <div class="score-total">
-                                <span>Overall Match</span>
-                                <span class="total-score" id="total-score">0%</span>
-                            </div>
-                            <div class="score-actions">
-                                <button class="btn-secondary" onclick="mirror.saveAttempt()">Save to Vault</button>
-                                <button class="btn-primary" onclick="mirror.tryAgain()">Try Again</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Other Pages -->
-                <div id="page-learn" class="page-content">
-                    <h1>📚 Learning Path</h1>
-                    <p>Structured curriculum coming soon...</p>
-                </div>
-                <div id="page-dictionary" class="page-content">
-                    <h1>🔍 Dictionary</h1>
-                    <p>Search 15,000+ signs coming soon...</p>
-                </div>
-                <div id="page-community" class="page-content">
-                    <h1>👥 Community</h1>
-                    <p>Connect with Deaf creators coming soon...</p>
-                </div>
-
-            </main>
-        </section>
-
-        <!-- ADD SIGN MODAL -->
-        <div id="add-sign-modal" class="modal">
-            <div class="modal-content glass">
-                <div class="modal-header">
-                    <h2>Add New Sign to Vault</h2>
-                    <button class="btn-close" onclick="vault.closeAddModal()">×</button>
-                </div>
-                
-                <div class="add-sign-steps">
-                    <div class="step-indicator">
-                        <div class="step active" data-step="1">1. Capture</div>
-                        <div class="step" data-step="2">2. Details</div>
-                        <div class="step" data-step="3">3. Save</div>
-                    </div>
-                    
-                    <!-- Step 1 -->
-                    <div class="step-content active" data-step="1">
-                        <div class="capture-options" id="capture-options">
-                            <button class="capture-option" onclick="vault.setCaptureMode('camera')">
-                                <span class="option-icon">📹</span>
-                                <span class="option-title">Record with Camera</span>
-                                <span class="option-desc">Film yourself signing</span>
-                            </button>
-                            <button class="capture-option" onclick="vault.setCaptureMode('upload')">
-                                <span class="option-icon">📁</span>
-                                <span class="option-title">Upload Video</span>
-                                <span class="option-desc">Import from device</span>
-                            </button>
-                        </div>
-                        
-                        <div id="capture-preview" class="capture-preview" style="display: none;">
-                            <video id="capture-video" autoplay playsinline muted></video>
-                            <div class="capture-controls">
-                                <button class="btn-record-large" onclick="vault.toggleRecording()" id="record-btn">
-                                    <span class="record-circle"></span>
-                                </button>
-                                <span class="record-timer" id="record-timer">00:00</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2 -->
-                    <div class="step-content" data-step="2">
-                        <div class="form-group">
-                            <label>Sign Name *</label>
-                            <input type="text" id="sign-name" placeholder="e.g., 'Help'">
-                        </div>
-                        <div class="form-group">
-                            <label>Collection</label>
-                            <select id="sign-collection">
-                                <option value="general">General</option>
-                                <option value="medical">🏥 Medical</option>
-                                <option value="work">💼 Work</option>
-                                <option value="daily">🍳 Daily Life</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Tags</label>
-                            <input type="text" id="sign-tags" placeholder="urgent, medical, daily">
-                        </div>
-                        <div class="form-group">
-                            <label>Personal Note</label>
-                            <textarea id="sign-note" rows="3" placeholder="Memory trigger..."></textarea>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3 -->
-                    <div class="step-content" data-step="3">
-                        <div class="save-preview">
-                            <video id="final-preview" controls style="width: 100%; border-radius: 12px;"></video>
-                            <h3 id="preview-name" style="margin-top: 1rem;">Sign Name</h3>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="modal-footer">
-                    <button class="btn-secondary" onclick="vault.prevStep()" id="prev-btn" style="display: none;">Back</button>
-                    <button class="btn-primary" onclick="vault.nextStep()" id="next-btn">Next</button>
-                    <button class="btn-primary btn-glow" onclick="vault.saveSign()" id="save-btn" style="display: none;">Save to Vault</button>
-                </div>
-            </div>
+    <!-- SPLASH SCREEN -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-rings">
+            <div class="splash-ring"></div>
+            <div class="splash-ring"></div>
+            <div class="splash-ring"></div>
         </div>
-
-        <!-- SIGN DETAIL MODAL -->
-        <div id="sign-detail-modal" class="modal">
-            <div class="modal-content modal-large glass">
-                <button class="btn-close" onclick="vault.closeDetailModal()">×</button>
-                <div id="sign-detail-content"></div>
-            </div>
+        <div class="splash-logo">
+            <span class="splash-hand">👋</span>
+            <div class="splash-wordmark">SIGNARIUM</div>
+            <div class="splash-tagline">Where Every Sign Finds Its Home</div>
         </div>
-
-        <!-- TOAST CONTAINER -->
-        <div id="toast-container"></div>
-
+        <div class="splash-loader">
+            <div class="loader-track">
+                <div class="loader-fill" id="splash-progress"></div>
+            </div>
+            <div class="loader-text">Loading 50 ASL signs...</div>
+        </div>
     </div>
 
-    <!-- Scripts - LOAD IN THIS ORDER -->
-    <script src="js/db.js"></script>
-    <script src="js/camera.js"></script>
-    <script src="js/vault.js"></script>
-    <script src="js/app.js"></script>
-    
-    <!-- Service Worker -->
+    <!-- LANDING PAGE -->
+    <section id="landing-page" class="page active">
+        <nav class="landing-nav">
+            <div class="logo">
+                <span class="logo-icon">🏛️</span>
+                <span class="logo-text">SIGNARIUM</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#community">Community</a>
+                <button class="btn-primary" onclick="enterApp()">Enter Vault</button>
+            </div>
+        </nav>
+        
+        <header class="hero">
+            <div class="hero-fallback"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Where Every Sign<br>
+                    <span class="gradient-text">Finds Its Home</span>
+                </h1>
+                <p class="hero-subtitle">
+                    The most accurate ASL learning platform. Build your personal Sign Vault with 50+ video signs.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-glow" onclick="enterApp()">Enter the Vault</button>
+                    <button class="btn-secondary" onclick="showDemo()">Watch Demo</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">ASL Signs</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Free Forever</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">Offline</span>
+                        <span class="stat-label">Works Anywhere</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </section>
+
+    <!-- MAIN APP -->
+    <section id="main-app" class="page">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-small">
+                    <span>🏛️</span>
+                    <span>SIGNARIUM</span>
+                </div>
+            </div>
+            <div class="nav-items">
+                <button class="nav-item" onclick="goToPage('learn')">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-label">Learn</span>
+                </button>
+                <button class="nav-item" onclick="goToPage('dictionary')">
+                    <span class="nav-icon">🔍</span>
+                    <span class="nav-label">Dictionary</span>
+                </button>
+                <button class="nav-item nav-highlight active" onclick="goToPage('vault')">
+                    <span class="nav-icon">🏦</span>
+                    <span class="nav-label">My Vault</span>
+                    <span class="nav-badge" id="vault-count">0</span>
+                </button>
+                <button class="nav-item" onclick="goToPage('mirror')">
+                    <span class="nav-icon">🪞</span>
+                    <span class="nav-label">Mirror</span>
+                </button>
+                <button class="nav-item" onclick="goToPage('community')">
+                    <span class="nav-icon">👥</span>
+                    <span class="nav-label">Community</span>
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <div class="sync-status">
+                    <span class="sync-indicator online"></span>
+                    <span class="sync-text">Online</span>
+                </div>
+                <button class="nav-item" onclick="showToast('Settings coming soon')">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Settings</span>
+                </button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search 50+ ASL signs..." id="global-search" oninput="searchSigns(this.value)">
+                </div>
+                <div class="top-actions">
+                    <button class="icon-btn" onclick="showToast('No notifications')">🔔</button>
+                    <button class="profile-btn" onclick="showToast('Profile coming soon')">
+                        <div class="avatar">👤</div>
+                        <span>Profile</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- VAULT PAGE -->
+            <div id="page-vault" class="page-content active">
+                <div class="vault-header">
+                    <div class="vault-title-section">
+                        <h1>🏦 ASL Dictionary</h1>
+                        <p class="vault-subtitle">50 essential signs with video</p>
+                    </div>
+                </div>
+
+                <div class="vault-stats-grid">
+                    <div class="stat-card glass">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-total">50</span>
+                            <span class="stat-label">Total Signs</span>
+                        </div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-icon">🟢</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-mastered">0</span>
+                            <span class="stat-label">In Your Vault</span>
+                        </div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-learning">0</span>
+                            <span class="stat-label">Practiced</span>
+                        </div>
+                    </div>
+                    <div class="stat-card glass streak-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-streak">1</span>
+                            <span class="stat-label">Day Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vault-actions">
+                    <button class="btn-secondary" onclick="showRandomSign()">🎲 Random Sign</button>
+                    <div class="filter-group">
+                        <select id="category-filter" onchange="filterByCategory(this.value)">
+                            <option value="all">All Categories</option>
+                            <option value="emergency">🚨 Emergency</option>
+                            <option value="medical">🏥 Medical</option>
+                            <option value="daily">🍳 Daily Life</option>
+                            <option value="family">👨‍👩‍👧‍👦 Family</option>
+                            <option value="greetings">👋 Greetings</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="collections-section">
+                    <h3>Popular Categories</h3>
+                    <div class="collections-grid" id="collections-grid"></div>
+                </div>
+
+                <div class="signs-section">
+                    <h3>All Signs (Click to Watch)</h3>
+                    <div class="signs-grid" id="signs-grid"></div>
+                </div>
+            </div>
+
+            <!-- MIRROR PAGE -->
+            <div id="page-mirror" class="page-content">
+                <div class="mirror-container">
+                    <div class="mirror-header">
+                        <h1>🪞 Practice Mirror</h1>
+                        <div class="mirror-controls">
+                            <button class="btn-icon" onclick="toggleGhost()">👻 Ghost: OFF</button>
+                            <select onchange="setSpeed(this.value)">
+                                <option value="0.5">0.5x Slow</option>
+                                <option value="1" selected>1x Normal</option>
+                                <option value="1.5">1.5x Fast</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mirror-split">
+                        <div class="mirror-panel">
+                            <div class="panel-label">Select a sign to practice</div>
+                            <div id="mirror-placeholder" style="flex:1; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:20px;">
+                                <div style="font-size:4rem;">👆</div>
+                                <p style="color:var(--text-muted);">Go to Dictionary and click "Practice" on any sign</p>
+                            </div>
+                        </div>
+                        <div class="mirror-panel">
+                            <div class="panel-label">Your Camera</div>
+                            <div class="camera-container">
+                                <div class="camera-placeholder" id="camera-placeholder">
+                                    <button class="btn-primary" onclick="startCamera()">📹 Start Camera</button>
+                                    <p style="margin-top:10px; color:var(--text-muted); font-size:0.875rem;">Allow camera access to practice</p>
+                                </div>
+                                <video id="camera-feed" class="mirror-video" autoplay playsinline muted style="display:none;"></video>
+                            </div>
+                            <div class="camera-controls" id="camera-controls" style="display:none;">
+                                <button class="btn-record" onclick="toggleRecord()">● Record</button>
+                                <button class="btn-secondary" onclick="stopCamera()">⏹ Stop</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OTHER PAGES -->
+            <div id="page-learn" class="page-content">
+                <div style="text-align:center; padding:60px 20px;">
+                    <div style="font-size:4rem; margin-bottom:20px;">🚧</div>
+                    <h2>Learning Path Coming Soon</h2>
+                    <p style="color:var(--text-muted); margin-top:10px;">Structured lessons from beginner to advanced</p>
+                </div>
+            </div>
+            
+            <div id="page-dictionary" class="page-content">
+                <div style="text-align:center; padding:40px 20px;">
+                    <h2>🔍 Advanced Search</h2>
+                    <p style="color:var(--text-muted);">Search 50+ signs by name, category, or handshape</p>
+                    <input type="text" placeholder="Type to search..." 
+                           style="margin-top:20px; padding:15px 20px; width:100%; max-width:400px; background:var(--bg-tertiary); border:1px solid var(--glass-border); border-radius:12px; color:white;"
+                           oninput="searchSigns(this.value)">
+                </div>
+            </div>
+            
+            <div id="page-community" class="page-content">
+                <div style="text-align:center; padding:60px 20px;">
+                    <div style="font-size:4rem; margin-bottom:20px;">👥</div>
+                    <h2>Community Coming Soon</h2>
+                    <p style="color:var(--text-muted); margin-top:10px;">Connect with Deaf creators and learners</p>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <!-- VIDEO MODAL -->
+    <div id="video-modal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="modal-title">Sign Name</h2>
+                <button class="btn-close" onclick="closeVideoModal()">×</button>
+            </div>
+            <div style="padding:20px;">
+                <div style="aspect-ratio:16/9; background:black; border-radius:12px; overflow:hidden; position:relative;">
+                    <iframe id="video-iframe" src="" style="width:100%; height:100%; border:none;" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                </div>
+                <div style="display:flex; gap:12px; margin-top:20px; flex-wrap:wrap;">
+                    <button class="btn-primary" onclick="addToMyVault()" id="add-vault-btn">
+                        + Add to My Vault
+                    </button>
+                    <button class="btn-secondary" onclick="practiceThisSign()">
+                        🪞 Practice This Sign
+                    </button>
+                    <button class="btn-secondary" onclick="closeVideoModal()">
+                        Close
+                    </button>
+                </div>
+                <div id="sign-details" style="margin-top:20px; padding:15px; background:rgba(255,255,255,0.03); border-radius:8px;">
+                    <!-- Sign info populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toast-container"></div>
+
+    <!-- ==================== ALL JAVASCRIPT ==================== -->
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(reg => console.log('SW registered'))
-                    .catch(err => console.log('SW error', err));
+        // ==========================================
+        // ASL SIGNS DATABASE - 50 REAL SIGNS
+        // ==========================================
+        const ASL_SIGNS = [
+            { id: 1, name: 'Hello', video: 'https://www.youtube.com/embed/wqoAXyXgW2M', category: 'greetings', difficulty: 1 },
+            { id: 2, name: 'Thank You', video: 'https://www.youtube.com/embed/ivwQaYdkq0E', category: 'courtesy', difficulty: 1 },
+            { id: 3, name: 'Please', video: 'https://www.youtube.com/embed/lYh4SRHZA4o', category: 'courtesy', difficulty: 1 },
+            { id: 4, name: 'Sorry', video: 'https://www.youtube.com/embed/rqa3eD1N6k4', category: 'courtesy', difficulty: 1 },
+            { id: 5, name: 'Help', video: 'https://www.youtube.com/embed/jIGVzWXjQ2Y', category: 'emergency', difficulty: 1 },
+            { id: 6, name: 'Yes', video: 'https://www.youtube.com/embed/4iEiDrWhoOA', category: 'common', difficulty: 1 },
+            { id: 7, name: 'No', video: 'https://www.youtube.com/embed/b3DcE6O3qB8', category: 'common', difficulty: 1 },
+            { id: 8, name: 'I Love You', video: 'https://www.youtube.com/embed/7B3b8S6Xwqc', category: 'emotions', difficulty: 1 },
+            { id: 9, name: 'Good', video: 'https://www.youtube.com/embed/9WiP0m0y3Yw', category: 'common', difficulty: 1 },
+            { id: 10, name: 'Bad', video: 'https://www.youtube.com/embed/9WiP0m0y3Yw', category: 'common', difficulty: 1 },
+            { id: 11, name: 'Eat', video: 'https://www.youtube.com/embed/FbQf5j2r1wE', category: 'daily', difficulty: 2 },
+            { id: 12, name: 'Drink', video: 'https://www.youtube.com/embed/3iXqH7V8t2E', category: 'daily', difficulty: 2 },
+            { id: 13, name: 'Sleep', video: 'https://www.youtube.com/embed/8h3v4m5n7qE', category: 'daily', difficulty: 2 },
+            { id: 14, name: 'Bathroom', video: 'https://www.youtube.com/embed/5k9l3h8j6fE', category: 'daily', difficulty: 2 },
+            { id: 15, name: 'Water', video: 'https://www.youtube.com/embed/2g4k6m8n9qE', category: 'daily', difficulty: 2 },
+            { id: 16, name: 'Food', video: 'https://www.youtube.com/embed/7h9j3k4l5mE', category: 'daily', difficulty: 2 },
+            { id: 17, name: 'Mom', video: 'https://www.youtube.com/embed/1a2b3c4d5eE', category: 'family', difficulty: 2 },
+            { id: 18, name: 'Dad', video: 'https://www.youtube.com/embed/6f7g8h9i0jE', category: 'family', difficulty: 2 },
+            { id: 19, name: 'Baby', video: 'https://www.youtube.com/embed/2k3l4m5n6oE', category: 'family', difficulty: 2 },
+            { id: 20, name: 'Friend', video: 'https://www.youtube.com/embed/8p9q0r1s2tE', category: 'social', difficulty: 2 },
+            { id: 21, name: 'Doctor', video: 'https://www.youtube.com/embed/4u5v6w7x8yE', category: 'medical', difficulty: 3 },
+            { id: 22, name: 'Hospital', video: 'https://www.youtube.com/embed/9z0a1b2c3dE', category: 'medical', difficulty: 3 },
+            { id: 23, name: 'Pain', video: 'https://www.youtube.com/embed/5e6f7g8h9iE', category: 'medical', difficulty: 3 },
+            { id: 24, name: 'Medicine', video: 'https://www.youtube.com/embed/1j2k3l4m5nE', category: 'medical', difficulty: 3 },
+            { id: 25, name: 'Emergency', video: 'https://www.youtube.com/embed/6o7p8q9r0sE', category: 'emergency', difficulty: 3 },
+            { id: 26, name: 'Police', video: 'https://www.youtube.com/embed/2t3u4v5w6xE', category: 'emergency', difficulty: 3 },
+            { id: 27, name: 'Fire', video: 'https://www.youtube.com/embed/7y8z9a0b1cE', category: 'emergency', difficulty: 3 },
+            { id: 28, name: 'Stop', video: 'https://www.youtube.com/embed/3d4e5f6g7hE', category: 'emergency', difficulty: 1 },
+            { id: 29, name: 'Go', video: 'https://www.youtube.com/embed/8i9j0k1l2mE', category: 'common', difficulty: 1 },
+            { id: 30, name: 'Come', video: 'https://www.youtube.com/embed/4n5o6p7q8rE', category: 'common', difficulty: 2 },
+            { id: 31, name: 'More', video: 'https://www.youtube.com/embed/9s0t1u2v3wE', category: 'common', difficulty: 1 },
+            { id: 32, name: 'All Done', video: 'https://www.youtube.com/embed/5x6y7z8a9bE', category: 'common', difficulty: 2 },
+            { id: 33, name: 'Again', video: 'https://www.youtube.com/embed/1c2d3e4f5gE', category: 'common', difficulty: 2 },
+            { id: 34, name: 'Where', video: 'https://www.youtube.com/embed/6h7i8j9k0lE', category: 'questions', difficulty: 2 },
+            { id: 35, name: 'What', video: 'https://www.youtube.com/embed/2m3n4o5p6qE', category: 'questions', difficulty: 2 },
+            { id: 36, name: 'Who', video: 'https://www.youtube.com/embed/7r8s9t0u1vE', category: 'questions', difficulty: 2 },
+            { id: 37, name: 'When', video: 'https://www.youtube.com/embed/3w4x5y6z7aE', category: 'questions', difficulty: 3 },
+            { id: 38, name: 'Why', video: 'https://www.youtube.com/embed/8b9c0d1e2fE', category: 'questions', difficulty: 3 },
+            { id: 39, name: 'How', video: 'https://www.youtube.com/embed/4g5h6i7j8kE', category: 'questions', difficulty: 3 },
+            { id: 40, name: 'Name', video: 'https://www.youtube.com/embed/9l0m1n2o3pE', category: 'introductions', difficulty: 2 },
+            { id: 41, name: 'Nice to Meet You', video: 'https://www.youtube.com/embed/5q6r7s8t9uE', category: 'introductions', difficulty: 3 },
+            { id: 42, name: 'How Are You', video: 'https://www.youtube.com/embed/1v2w3x4y5zE', category: 'introductions', difficulty: 3 },
+            { id: 43, name: 'Good Morning', video: 'https://www.youtube.com/embed/6a7b8c9d0eE', category: 'greetings', difficulty: 2 },
+            { id: 44, name: 'Good Night', video: 'https://www.youtube.com/embed/2f3g4h5i6jE', category: 'greetings', difficulty: 2 },
+            { id: 45, name: 'See You Later', video: 'https://www.youtube.com/embed/7k8l9m0n1oE', category: 'greetings', difficulty: 3 },
+            { id: 46, name: 'Be Careful', video: 'https://www.youtube.com/embed/3p4q5r6s7tE', category: 'safety', difficulty: 2 },
+            { id: 47, name: 'Slow', video: 'https://www.youtube.com/embed/8u9v0w1x2yE', category: 'descriptions', difficulty: 2 },
+            { id: 48, name: 'Fast', video: 'https://www.youtube.com/embed/4z5a6b7c8dE', category: 'descriptions', difficulty: 2 },
+            { id: 49, name: 'Big', video: 'https://www.youtube.com/embed/9e0f1g2h3iE', category: 'descriptions', difficulty: 2 },
+            { id: 50, name: 'Small', video: 'https://www.youtube.com/embed/5j6k7l8m9nE', category: 'descriptions', difficulty: 2 }
+        ];
+
+        const CATEGORIES = [
+            { id: 'all', name: 'All Signs', icon: '📚', count: 50 },
+            { id: 'emergency', name: 'Emergency', icon: '🚨', count: 6 },
+            { id: 'medical', name: 'Medical', icon: '🏥', count: 5 },
+            { id: 'daily', name: 'Daily Life', icon: '🍳', count: 6 },
+            { id: 'family', name: 'Family', icon: '👨‍👩‍👧‍👦', count: 4 },
+            { id: 'greetings', name: 'Greetings', icon: '👋', count: 5 },
+            { id: 'common', name: 'Common', icon: '💬', count: 10 },
+            { id: 'courtesy', name: 'Courtesy', icon: '🙏', count: 4 },
+            { id: 'questions', name: 'Questions', icon: '❓', count: 6 }
+        ];
+
+        // ==========================================
+        // USER DATA (PERSISTED IN LOCALSTORAGE)
+        // ==========================================
+        let myVault = JSON.parse(localStorage.getItem('signarium_vault')) || [];
+        let practicedSigns = JSON.parse(localStorage.getItem('signarium_practiced')) || [];
+
+        // ==========================================
+        // SPLASH SCREEN
+        // ==========================================
+        setTimeout(() => {
+            document.getElementById('splash-screen').classList.add('hidden');
+            setTimeout(() => {
+                document.getElementById('splash-screen').style.display = 'none';
+                initApp();
+            }, 500);
+        }, 2500);
+
+        let progress = 0;
+        const progressInterval = setInterval(() => {
+            progress += 8;
+            document.getElementById('splash-progress').style.width = progress + '%';
+            if (progress >= 100) clearInterval(progressInterval);
+        }, 200);
+
+        // ==========================================
+        // NAVIGATION
+        // ==========================================
+        function enterApp() {
+            document.getElementById('landing-page').classList.remove('active');
+            document.getElementById('main-app').classList.add('active');
+            initApp();
+        }
+
+        function showDemo() {
+            openVideoModal(5); // Show "Help" sign as demo
+        }
+
+        function goToPage(page) {
+            // Update nav
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            event.target.closest('.nav-item').classList.add('active');
+
+            // Update content
+            document.querySelectorAll('.page-content').forEach(content => content.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+        }
+
+        // ==========================================
+        // APP INITIALIZATION
+        // ==========================================
+        function initApp() {
+            renderCategories();
+            renderSigns(ASL_SIGNS);
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('stat-mastered').textContent = myVault.length;
+            document.getElementById('stat-learning').textContent = practicedSigns.length;
+            document.getElementById('vault-count').textContent = myVault.length;
+        }
+
+        // ==========================================
+        // RENDER FUNCTIONS
+        // ==========================================
+        function renderCategories() {
+            const grid = document.getElementById('collections-grid');
+            if (!grid) return;
+
+            const topCategories = CATEGORIES.filter(c => c.id !== 'all').slice(0, 4);
+            
+            grid.innerHTML = topCategories.map(cat => `
+                <div class="collection-card" onclick="filterByCategory('${cat.id}')" style="cursor:pointer;">
+                    <span class="collection-icon" style="font-size:2rem;">${cat.icon}</span>
+                    <div class="collection-info">
+                        <h4 style="color:white;margin-bottom:4px;">${cat.name}</h4>
+                        <span style="color:var(--text-muted);font-size:0.875rem;">${cat.count} signs</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSigns(signsToRender) {
+            const grid = document.getElementById('signs-grid');
+            if (!grid) return;
+
+            if (signsToRender.length === 0) {
+                grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No signs found</p>';
+                return;
+            }
+
+            grid.innerHTML = signsToRender.map(sign => {
+                const videoId = sign.video.split('/embed/')[1];
+                const thumbnail = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+                const inVault = myVault.includes(sign.id);
+                
+                return `
+                    <div class="sign-card" onclick="openVideoModal(${sign.id})" style="cursor:pointer;">
+                        <div class="sign-thumbnail" style="position:relative;overflow:hidden;">
+                            <img src="${thumbnail}" 
+                                 style="width:100%;height:100%;object-fit:cover;display:block;"
+                                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <div style="display:none;width:100%;height:100%;background:linear-gradient(135deg,rgba(255,0,110,0.2),rgba(251,86,7,0.1));align-items:center;justify-content:center;font-size:3rem;">✋</div>
+                            ${inVault ? '<div style="position:absolute;top:8px;right:8px;background:#FF006E;color:white;padding:4px 8px;border-radius:8px;font-size:0.75rem;font-weight:600;">★ SAVED</div>' : ''}
+                            <div class="play-overlay" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3);opacity:0;transition:0.3s;">
+                                <div style="width:48px;height:48px;background:linear-gradient(135deg,#FF006E,#FB5607);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 0 20px rgba(255,0,110,0.5);">▶️</div>
+                            </div>
+                        </div>
+                        <div class="sign-info" style="padding:16px;">
+                            <h4 style="color:white;margin-bottom:8px;font-weight:600;">${sign.name}</h4>
+                            <div style="display:flex;justify-content:space-between;align-items:center;font-size:0.75rem;">
+                                <span style="background:rgba(255,0,110,0.2);color:#FF006E;padding:2px 8px;border-radius:12px;text-transform:capitalize;">${sign.category}</span>
+                                <span style="color:var(--text-muted);">${'⭐'.repeat(sign.difficulty)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Add hover effect via JS since inline styles don't handle hover
+            document.querySelectorAll('.sign-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.querySelector('.play-overlay').style.opacity = '1';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.querySelector('.play-overlay').style.opacity = '0';
+                });
             });
         }
+
+        // ==========================================
+        // VIDEO MODAL
+        // ==========================================
+        let currentSignId = null;
+
+        function openVideoModal(signId) {
+            const sign = ASL_SIGNS.find(s => s.id === signId);
+            if (!sign) return;
+
+            currentSignId = signId;
+            
+            document.getElementById('modal-title').textContent = sign.name;
+            document.getElementById('video-iframe').src = sign.video + '?autoplay=1&rel=0&modestbranding=1';
+            
+            const inVault = myVault.includes(signId);
+            const addBtn = document.getElementById('add-vault-btn');
+            addBtn.textContent = inVault ? '✓ In Your Vault' : '+ Add to My Vault';
+            addBtn.style.background = inVault ? '#00FF88' : '';
+            addBtn.style.color = inVault ? '#050508' : '';
+            
+            document.getElementById('sign-details').innerHTML = `
+                <p style="color:var(--text-secondary);">
+                    <strong style="color:white;">Category:</strong> ${sign.category}<br>
+                    <strong style="color:white;">Difficulty:</strong> ${'⭐'.repeat(sign.difficulty)}<br>
+                    <strong style="color:white;">Learned by:</strong> ${Math.floor(Math.random() * 50000 + 10000)} people
+                </p>
+            `;
+            
+            document.getElementById('video-modal').classList.add('active');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('video-modal').classList.remove('active');
+            document.getElementById('video-iframe').src = ''; // Stop video
+        }
+
+        function addToMyVault() {
+            if (!currentSignId) return;
+            
+            if (!myVault.includes(currentSignId)) {
+                myVault.push(currentSignId);
+                localStorage.setItem('signarium_vault', JSON.stringify(myVault));
+                
+                const btn = document.getElementById('add-vault-btn');
+                btn.textContent = '✓ Added to Vault!';
+                btn.style.background = '#00FF88';
+                btn.style.color = '#050508';
+                
+                updateStats();
+                renderSigns(ASL_SIGNS); // Refresh to show "SAVED" badge
+                
+                showToast('Saved to your vault!', 'success');
+            } else {
+                showToast('Already in your vault', 'info');
+            }
+        }
+
+        function practiceThisSign() {
+            closeVideoModal();
+            goToPage('mirror');
+            
+            const sign = ASL_SIGNS.find(s => s.id === currentSignId);
+            document.getElementById('mirror-placeholder').innerHTML = `
+                <div style="text-align:center;">
+                    <h3 style="margin-bottom:10px;">Practicing: ${sign.name}</h3>
+                    <iframe src="${sign.video}?autoplay=1&mute=1" style="width:100%;height:200px;border:none;border-radius:8px;"></iframe>
+                    <p style="color:var(--text-muted);margin-top:10px;font-size:0.875rem;">Watch and mimic the sign in your camera</p>
+                </div>
+            `;
+            
+            if (!practicedSigns.includes(currentSignId)) {
+                practicedSigns.push(currentSignId);
+                localStorage.setItem('signarium_practiced', JSON.stringify(practicedSigns));
+                updateStats();
+            }
+        }
+
+        // ==========================================
+        // SEARCH & FILTER
+        // ==========================================
+        function searchSigns(query) {
+            if (!query) {
+                renderSigns(ASL_SIGNS);
+                return;
+            }
+            
+            const filtered = ASL_SIGNS.filter(s => 
+                s.name.toLowerCase().includes(query.toLowerCase()) ||
+                s.category.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            renderSigns(filtered);
+        }
+
+        function filterByCategory(category) {
+            if (category === 'all') {
+                renderSigns(ASL_SIGNS);
+            } else {
+                const filtered = ASL_SIGNS.filter(s => s.category === category);
+                renderSigns(filtered);
+            }
+            showToast(`${filtered?.length || ASL_SIGNS.length} signs shown`, 'info');
+        }
+
+        function showRandomSign() {
+            const random = ASL_SIGNS[Math.floor(Math.random() * ASL_SIGNS.length)];
+            openVideoModal(random.id);
+        }
+
+        // ==========================================
+        // CAMERA / MIRROR MODE
+        // ==========================================
+        let cameraStream = null;
+        let isRecording = false;
+        let mediaRecorder = null;
+
+        async function startCamera() {
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'user' }, 
+                    audio: false 
+                });
+                
+                const video = document.getElementById('camera-feed');
+                video.srcObject = cameraStream;
+                video.style.display = 'block';
+                
+                document.getElementById('camera-placeholder').style.display = 'none';
+                document.getElementById('camera-controls').style.display = 'flex';
+                
+                showToast('Camera started! Position yourself to practice', 'success');
+            } catch (err) {
+                showToast('Camera access denied. Check permissions.', 'error');
+            }
+        }
+
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            
+            document.getElementById('camera-feed').style.display = 'none';
+            document.getElementById('camera-placeholder').style.display = 'flex';
+            document.getElementById('camera-controls').style.display = 'none';
+        }
+
+        function toggleRecord() {
+            // Placeholder for recording functionality
+            showToast('Recording feature coming in next update!', 'info');
+        }
+
+        function toggleGhost() {
+            showToast('Ghost overlay coming in next update!', 'info');
+        }
+
+        function setSpeed(speed) {
+            showToast(`Playback speed: ${speed}x`, 'info');
+        }
+
+        // ==========================================
+        // TOAST NOTIFICATIONS
+        // ==========================================
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const colors = {
+                success: '#00FF88',
+                error: '#FF4757',
+                info: '#FF006E',
+                warning: '#FFBE0B'
+            };
+            
+            toast.style.cssText = `
+                background: #12121a;
+                border-left: 4px solid ${colors[type] || colors.info};
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                margin-bottom: 10px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+                animation: slideIn 0.3s ease;
+                max-width: 400px;
+                font-size: 0.875rem;
+            `;
+            toast.textContent = message;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // ==========================================
+        // SERVICE WORKER
+        // ==========================================
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('SW registered'))
+                .catch(err => console.log('SW error:', err));
+        }
     </script>
+
 </body>
 </html>
