@@ -96,46 +96,136 @@ const vault = {
         }).join('');
     },
 
-    renderSigns(filtered = this.signs) {
-        const grid = document.getElementById('signs-grid');
-        if (!grid) return;
-        
-        if (filtered.length === 0) {
-            grid.innerHTML = '<p style="color: var(--text-muted);">No signs found. Add your first sign!</p>';
-            return;
-        }
-        
-        grid.innerHTML = filtered.map(sign => `
-            <div class="sign-card" onclick="vault.openSignDetail('${sign.id}')">
-                <div class="sign-thumbnail">
-                    <div style="width: 100%; height: 100%; background: var(--bg-tertiary); display: flex; align-items: center; justify-content: center; font-size: 3rem;">
-                        ✋
-                    </div>
-                    <div class="play-overlay">
-                        <div class="play-icon">▶️</div>
-                    </div>
-                </div>
-                <div class="sign-info">
-                    <h4 class="sign-name">${sign.name}</h4>
-                    <div class="sign-meta">
-                        <span class="status-badge ${sign.status}">${sign.status}</span>
-                        <span>👁 ${sign.views}</span>
-                    </div>
+  function renderSigns(signsToShow = ASL_SIGNS) {
+    const grid = document.getElementById('signs-grid');
+    if (!grid) return;
+    
+    if (signsToShow.length === 0) {
+        grid.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px;">No signs found</p>';
+        return;
+    }
+    
+    grid.innerHTML = signsToShow.map(sign => `
+        <div class="sign-card" onclick="playASLVideo('${sign.id}')">
+            <div class="sign-thumbnail">
+                <img src="${getYouTubeThumbnail(sign.video)}" 
+                     style="width:100%;height:100%;object-fit:cover;"
+                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div style="display:none;width:100%;height:100%;background:linear-gradient(135deg,rgba(255,0,110,0.2),rgba(251,86,7,0.1));align-items:center;justify-content:center;font-size:3rem;">✋</div>
+                <div class="play-overlay">
+                    <div class="play-icon">▶️</div>
                 </div>
             </div>
-        `).join('');
-    },
+            <div class="sign-info">
+                <h4 class="sign-name">${sign.name}</h4>
+                <div class="sign-meta">
+                    <span class="status-badge" style="background:rgba(255,0,110,0.2);color:#FF006E;">${sign.category}</span>
+                    <span style="font-size:0.7rem;color:var(--text-muted);">Level ${sign.difficulty}</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
 
-    updateStats() {
-        const total = this.signs.length;
-        const mastered = this.signs.filter(s => s.status === 'mastered').length;
-        const learning = this.signs.filter(s => s.status === 'learning').length;
-        
-        document.getElementById('stat-total').textContent = total;
-        document.getElementById('stat-mastered').textContent = mastered;
-        document.getElementById('stat-learning').textContent = learning;
-        document.getElementById('vault-count').textContent = total;
-    },
+function playASLVideo(signId) {
+    const sign = ASL_SIGNS.find(s => s.id == signId);
+    if (!sign) return;
+    
+    // Create video modal
+    const modal = document.createElement('div');
+    modal.className = 'modal active';
+    modal.style.cssText = 'display:flex;align-items:center;justify-content:center;';
+    modal.innerHTML = `
+        <div class="modal-content modal-large" style="max-width:900px;width:90%;background:#0a0a0f;border:1px solid rgba(255,0,110,0.3);">
+            <div class="modal-header" style="border-bottom:1px solid rgba(255,255,255,0.1);">
+                <h2 style="color:white;">${sign.name}</h2>
+                <button class="btn-close" onclick="this.closest('.modal').remove()" style="background:rgba(255,0,110,0.2);color:#FF006E;">×</button>
+            </div>
+            <div style="padding:20px;">
+                <div style="aspect-ratio:16/9;background:black;border-radius:12px;overflow:hidden;">
+                    <iframe src="${sign.video}?autoplay=1&rel=0" 
+                            style="width:100%;height:100%;border:none;"
+                            allowfullscreen
+                            allow="autoplay; encrypted-media">
+                    </iframe>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;">
+                    <button class="btn-primary" onclick="addToMyVault('${sign.id}')" style="flex:1;min-width:140px;">
+                        + Add to My Vault
+                    </button>
+                    <button class="btn-secondary" onclick="showRelated('${sign.category}')" style="flex:1;min-width:140px;">
+                        More ${sign.category}
+                    </button>
+                    <button class="btn-secondary" onclick="this.closest('.modal').remove()">
+                        Close
+                    </button>
+                </div>
+                <div style="margin-top:20px;padding:15px;background:rgba(255,255,255,0.03);border-radius:8px;">
+                    <p style="color:var(--text-secondary);font-size:0.9rem;">
+                        <strong>Category:</strong> ${sign.category} | 
+                        <strong>Difficulty:</strong> ${'⭐'.repeat(sign.difficulty)} | 
+                        <strong>ID:</strong> ${sign.id}
+                    </p>
+                </div>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Increment view count (in real app, save to database)
+    sign.views = (sign.views || 0) + 1;
+}
+
+function addToMyVault(signId) {
+    const sign = ASL_SIGNS.find(s => s.id == signId);
+    showToast(`"${sign.name}" added to your vault!`, 'success');
+}
+
+function showRelated(category) {
+    const related = getSignsByCategory(category);
+    renderSigns(related);
+    document.querySelector('.modal.active')?.remove();
+    showToast(`Showing ${related.length} ${category} signs`, 'info');
+    goToPage('vault');
+}
+
+// Initialize with all signs
+function initVault() {
+    renderCollections();
+    renderSigns(ASL_SIGNS); // Show ALL 50 signs immediately
+    updateStats();
+}
+
+function renderCollections() {
+    const grid = document.getElementById('collections-grid');
+    if (!grid) return;
+    
+    grid.innerHTML = CATEGORIES.map(cat => {
+        const count = cat.id === 'all' ? ASL_SIGNS.length : ASL_SIGNS.filter(s => s.category === cat.id).length;
+        return `
+            <div class="collection-card" onclick="filterByCategory('${cat.id}')">
+                <span class="collection-icon" style="font-size:2rem;">${cat.icon}</span>
+                <div class="collection-info">
+                    <h4 style="color:white;margin-bottom:4px;">${cat.name}</h4>
+                    <span class="collection-count" style="color:var(--text-muted);font-size:0.875rem;">${count} signs</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function filterByCategory(categoryId) {
+    const filtered = getSignsByCategory(categoryId);
+    renderSigns(filtered);
+    showToast(`${filtered.length} signs in ${categoryId}`, 'info');
+}
+
+function updateStats() {
+    document.getElementById('stat-total').textContent = ASL_SIGNS.length;
+    document.getElementById('stat-mastered').textContent = '0'; // User hasn't mastered any yet
+    document.getElementById('stat-learning').textContent = '0';
+    document.getElementById('vault-count').textContent = '0';
+}
 
     openAddModal() {
         this.currentStep = 1;
